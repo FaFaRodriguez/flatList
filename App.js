@@ -1,12 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, Button, FlatList } from 'react-native';
+import React, { useState } from "react";
+ 
+
+
 
 export default function App() {
+  let arrayUsuarios= []
+  const [Nombre,SetNombre] = useState("");
+  const [Edad,SetEdad] = useState(0);
+
+  function CrearUsuario(){
+
+    let Usuario= {
+
+      Nombre: Nombre,
+      Edad: Edad,
+    }
+
+    arrayUsuarios.push(Usuario);
+    console.log(arrayUsuarios)
+
+  }
+  
+ 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <SafeAreaView>
+        <TextInput
+          style={styles.input}
+          onChangeText={texto=> SetNombre(texto)}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={texto=> SetEdad(texto)}
+          placeholder="useless placeholder"
+          keyboardType="numeric"
+        />
+
+        <Button
+          title="Press me"
+          onPress={() => CrearUsuario()}
+        />
+      </SafeAreaView>
+
+    </>
+    
+
+
+
+
   );
 }
 
