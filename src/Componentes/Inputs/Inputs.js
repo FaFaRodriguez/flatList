@@ -2,7 +2,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, Button, FlatList } from 'react-native';
 import React, { useState } from "react";
-import { Context } from '../../../App';
 
 export default function Inputs(params) {
 
