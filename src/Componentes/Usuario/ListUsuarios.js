@@ -1,19 +1,67 @@
 import { setStatusBarBackgroundColor } from "expo-status-bar";
-import React from "react";
-import {View, Text, StyleSheet, Button,  Alert, Modal, Pressable, useState} from 'react-native'
+
+import {View, Text, StyleSheet, Button,  Alert, Modal, Pressable, SafeAreaView, TextInput} from 'react-native'
+import React, { useState } from "react";
+
 
 const ListUsuario  = (params) =>{
+
+  const [modalOpen,SetModal] = useState("");
+  const [Nombre,SetNombre] = useState("");
+   const [Edad,SetEdad] = useState(0);
+
+   function ModificarUsuario() {
+    let elemento;
+    elemento = params.arrayUsuario.find(item => item.id === params.item.id);
+    console.log(elemento)
+    elemento.Edad = Edad;
+    elemento.Nombre = Nombre;
+    console.log(elemento)
+    SetModal(false)
+
+}
 
     function EliminarUsuario() {
         params.SetArrayUsuario(params.arrayUsuario.filter(item => item.id !== params.item.id));
     }
-    function CambiarUsuario() {
-        
-    }
+
 
   return (
   
     <>
+
+            <Modal visible={modalOpen} animationType='slide'>
+                      <View style={StyleSheet.modalcontent}>
+                      <Button
+                                title="cerrar"
+                                color="grey"
+                                onPress={() => SetModal(false)}
+                            />
+                     
+                                        <SafeAreaView style= {styles.container}>
+                                <View style ={styles.inputContainer}>
+                                    <TextInput
+                                    style={styles.input}
+                                    onChangeText={texto=> SetNombre(texto)}
+                                    placeholder="Ingrese el nombre"
+                                    />
+                                    <TextInput
+                                    style={styles.input}
+                                    onChangeText={texto=> SetEdad(texto)}
+                                    placeholder="Ingrese la edad"
+                                    keyboardType="numeric"
+                                    />
+
+                                </View>
+                                
+                                <Button
+                                  title="Modificar Usuario"
+                                  onPress={() => ModificarUsuario()}
+                                />
+                            </SafeAreaView>
+                      
+                      </View>
+                    </Modal>
 
 
     
@@ -30,10 +78,11 @@ const ListUsuario  = (params) =>{
                     onPress={() => EliminarUsuario()}
                 />
                 <View style= {{marginVertical: 4}}/>
-                <Button
+                <Button 
                     title="Cambiar datos"
                     color="grey"
-                    onPress={() => CambiarUsuario()}
+                    onPress={() => SetModal(true)}
+                    
                 />
             </View>
             
@@ -97,7 +146,14 @@ const styles = StyleSheet.create({
       modalText: {
         marginBottom: 15,
         textAlign: "center"
-      }
+      },
+      input: {
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
+      
+    }
 
 })
 
