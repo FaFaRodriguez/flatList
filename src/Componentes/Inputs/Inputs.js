@@ -2,14 +2,31 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, Button, FlatList } from 'react-native';
 import React, { useState } from "react";
+import Swal from 'sweetalert2'
 
 export default function Inputs(params) {
+
+  function EjecutarSwal() {
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Ingrese los datos que faltan',
+      
+    })
+    
+    
+  }
 
     const [Nombre,SetNombre] = useState("");
     const [Edad,SetEdad] = useState(0);
     const [IdUsuario,SetIdUsuario] = useState(2);
     
     function CrearUsuario(){
+
+      if (!Nombre||!Edad) {
+        EjecutarSwal()
+        
+      }else{
       let Usuario= {
   
         Nombre: Nombre,
@@ -18,6 +35,7 @@ export default function Inputs(params) {
       }
       params.SetArrayUsuario([...params.arrayUsuario,Usuario])
       SetIdUsuario(IdUsuario+1)
+      }
     }
 
     return(

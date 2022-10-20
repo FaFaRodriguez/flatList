@@ -2,7 +2,7 @@ import { setStatusBarBackgroundColor } from "expo-status-bar";
 
 import {View, Text, StyleSheet, Button,  Alert, Modal, Pressable, SafeAreaView, TextInput} from 'react-native'
 import React, { useState } from "react";
-
+import Swal from 'sweetalert2'
 
 const ListUsuario  = (params) =>{
 
@@ -10,12 +10,29 @@ const ListUsuario  = (params) =>{
   const [Nombre,SetNombre] = useState("");
   const [Edad,SetEdad] = useState(0);
 
+  function EjecutarSwal() {
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Ingrese los datos que faltan',
+      
+    })
+    
+    
+  }
+
   function ModificarUsuario() {
+    SetModal(false)
+    if (!Nombre||!Edad) {
+      EjecutarSwal()
+      
+    }else{
     let elemento;
     elemento = params.arrayUsuario.find(item => item.id === params.item.id);
     elemento.Edad = Edad;
     elemento.Nombre = Nombre;
-    SetModal(false)
+    
+    }
 
   }
 
