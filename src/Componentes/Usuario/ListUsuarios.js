@@ -8,18 +8,16 @@ const ListUsuario  = (params) =>{
 
   const [modalOpen,SetModal] = useState("");
   const [Nombre,SetNombre] = useState("");
-   const [Edad,SetEdad] = useState(0);
+  const [Edad,SetEdad] = useState(0);
 
-   function ModificarUsuario() {
+  function ModificarUsuario() {
     let elemento;
     elemento = params.arrayUsuario.find(item => item.id === params.item.id);
-    console.log(elemento)
     elemento.Edad = Edad;
     elemento.Nombre = Nombre;
-    console.log(elemento)
     SetModal(false)
 
-}
+  }
 
     function EliminarUsuario() {
         params.SetArrayUsuario(params.arrayUsuario.filter(item => item.id !== params.item.id));
@@ -29,41 +27,48 @@ const ListUsuario  = (params) =>{
   return (
   
     <>
+      <Modal visible={modalOpen} animationType='slide'>
+          <View style={styles.modalcontent}>
+            
+              <SafeAreaView style= {styles.containerModal}>
 
-            <Modal visible={modalOpen} animationType='slide'>
-                      <View style={StyleSheet.modalcontent}>
-                      <Button
-                                title="cerrar"
-                                color="grey"
-                                onPress={() => SetModal(false)}
-                            />
-                     
-                                        <SafeAreaView style= {styles.container}>
-                                <View style ={styles.inputContainer}>
-                                    <TextInput
-                                    style={styles.input}
-                                    onChangeText={texto=> SetNombre(texto)}
-                                    placeholder="Ingrese el nombre"
-                                    />
-                                    <TextInput
-                                    style={styles.input}
-                                    onChangeText={texto=> SetEdad(texto)}
-                                    placeholder="Ingrese la edad"
-                                    keyboardType="numeric"
-                                    />
+                <View>
+                
+                    <View >
+                        <TextInput
+                        style={styles.input}
+                        onChangeText={texto=> SetNombre(texto)}
+                        placeholder="Ingrese el nombre"
+                        />
+                        <TextInput
+                        style={styles.input}
+                        onChangeText={texto=> SetEdad(texto)}
+                        placeholder="Ingrese la edad"
+                        keyboardType="numeric"
+                        />
+                    </View> 
 
-                                </View>
-                                
-                                <Button
-                                  title="Modificar Usuario"
-                                  onPress={() => ModificarUsuario()}
-                                />
-                            </SafeAreaView>
+                   
                       
-                      </View>
-                    </Modal>
+                    <View style= {{marginTop: 10}}>     
+                          <Button 
+                            title="Modificar Usuario"
+                            onPress={() => ModificarUsuario()}
+                          />
+                    </View>
+                  
+                </View>
+
+                <Button
+                  title="cerrar"
+                  color="grey"
+                  onPress={() => SetModal(false)}
+                />
 
 
+              </SafeAreaView>
+          </View>
+      </Modal>
     
         <View style= {styles.container}>
             <View style={{flex:5}}>
@@ -77,13 +82,14 @@ const ListUsuario  = (params) =>{
                     color="red"
                     onPress={() => EliminarUsuario()}
                 />
+                
                 <View style= {{marginVertical: 4}}/>
-                <Button 
-                    title="Cambiar datos"
-                    color="grey"
-                    onPress={() => SetModal(true)}
-                    
-                />
+                  <Button 
+                      title="Cambiar datos"
+                      color="grey"
+                      onPress={() => SetModal(true)}
+                      
+                  />
             </View>
             
         </View>
@@ -103,6 +109,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         flexDirection: "row",
     },
+    containerModal: {
+      padding: 10,
+      backgroundColor: '#f1f2f1',
+      marginHorizontal: 10,
+      borderRadius: 10,
+  },
     datos:{
         padding: 10
     },
@@ -111,21 +123,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22
-      },
-      modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
       },
       button: {
         borderRadius: 20,
@@ -143,16 +140,16 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center"
       },
-      modalText: {
-        marginBottom: 15,
-        textAlign: "center"
-      },
       input: {
       height: 40,
       margin: 12,
       borderWidth: 1,
       padding: 10,
-      
+    },
+    modalcontent: {
+      flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     }
 
 })
