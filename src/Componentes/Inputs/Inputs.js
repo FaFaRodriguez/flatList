@@ -17,8 +17,19 @@ export default function Inputs(params) {
     
   }
 
+  function EjecutarSwal2() {
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Ingrese solo numeros',
+      
+    })
+    
+    
+  }
+
     const [Nombre,SetNombre] = useState("");
-    const [Edad,SetEdad] = useState(0);
+    const [Edad,SetEdad] = useState("");
     const [IdUsuario,SetIdUsuario] = useState(2);
     
     function CrearUsuario(){
@@ -36,6 +47,27 @@ export default function Inputs(params) {
       params.SetArrayUsuario([...params.arrayUsuario,Usuario])
       SetIdUsuario(IdUsuario+1)
       }
+
+      SetNombre("")
+      SetEdad("")
+    }
+
+    function onChanged(texto){
+      let newText = '';
+      let numbers = '0123456789';
+  
+      for (var i=0; i < texto.length; i++) {
+          if(numbers.indexOf(texto[i]) > -1 ) {
+              newText = newText + texto[i];
+              SetEdad(texto);
+          }
+          else {
+              
+            EjecutarSwal2();
+          }
+      }
+      
+  
     }
 
     return(
@@ -46,12 +78,15 @@ export default function Inputs(params) {
                 style={styles.input}
                 onChangeText={texto=> SetNombre(texto)}
                 placeholder="Ingrese el nombre"
+                value={Nombre}
                 />
                 <TextInput
                 style={styles.input}
-                onChangeText={texto=> SetEdad(texto)}
+                onChangeText={texto=> onChanged(texto)}
                 placeholder="Ingrese la edad"
-                keyboardType="numeric"
+                
+                value={Edad}
+                keyboardType='number-pad'
                 />
 
             </View>

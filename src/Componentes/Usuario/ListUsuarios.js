@@ -8,7 +8,7 @@ const ListUsuario  = (params) =>{
 
   const [modalOpen,SetModal] = useState("");
   const [Nombre,SetNombre] = useState("");
-  const [Edad,SetEdad] = useState(0);
+  const [Edad,SetEdad] = useState("");
 
   function EjecutarSwal() {
 
@@ -22,22 +22,41 @@ const ListUsuario  = (params) =>{
   }
 
   function ModificarUsuario() {
-    SetModal(false)
-    if (!Nombre||!Edad) {
-      EjecutarSwal()
+    if (!Nombre || !Edad) {
+      
+      alert("Ingrese los datos que faltan")
       
     }else{
-    let elemento;
-    elemento = params.arrayUsuario.find(item => item.id === params.item.id);
-    elemento.Edad = Edad;
-    elemento.Nombre = Nombre;
-    
+      let elemento;
+      elemento = params.arrayUsuario.find(item => item.id === params.item.id);
+      elemento.Edad = Edad;
+      elemento.Nombre = Nombre;
+      SetModal(false)
+      SetNombre("")
+      SetEdad("")
     }
 
   }
 
     function EliminarUsuario() {
         params.SetArrayUsuario(params.arrayUsuario.filter(item => item.id !== params.item.id));
+    }
+
+    function onChanged(texto){
+      let newText = '';
+      let numbers = '0123456789';
+  
+      for (var i=0; i < texto.length; i++) {
+          if(numbers.indexOf(texto[i]) > -1 ) {
+              newText = newText + texto[i];
+              SetEdad(texto);
+          }
+          else {
+              alert("ingrese solo numeros")
+            
+          }
+      }
+      
     }
 
 
@@ -59,9 +78,10 @@ const ListUsuario  = (params) =>{
                         />
                         <TextInput
                         style={styles.input}
-                        onChangeText={texto=> SetEdad(texto)}
+                        onChangeText={texto=> onChanged(texto)}
                         placeholder="Ingrese la edad"
-                        keyboardType="numeric"
+                        value={Edad}
+                        keyboardType='number-pad'
                         />
                     </View> 
 
